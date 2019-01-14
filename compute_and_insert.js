@@ -97,8 +97,8 @@ function compute_agregated(cost_matrix) {
     in_rubles = in_rubles + cost_by_type_and_currency['cash'][rub]
 
     var in_usd = cost_by_type_and_currency['bond'][usd]
-    in_rubles = in_rubles + cost_by_type_and_currency['stock'][usd]
-    in_rubles = in_rubles + cost_by_type_and_currency['cash'][usd]
+    in_usd = in_usd + cost_by_type_and_currency['stock'][usd]
+    in_usd = in_usd + cost_by_type_and_currency['cash'][usd]
 
     var in_cash = cost_by_type_and_currency['cash'][rub]
     in_cash = in_cash + cost_by_type_and_currency['cash'][usd]
