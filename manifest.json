@@ -1,26 +1,41 @@
-  {
-    "name": "Tinkoff investing percentages table.",
-    "version": "1.0.1",
-    "description": "Add table with percenages per currencies and per equity type to Tinkoff invest site.",
-    "permissions": ["activeTab", "declarativeContent", "storage"],
-    "background": {
-      "scripts": ["background.js"],
-      "persistent": false
-    },
-    "page_action": {
-      "default_popup": "popup.html",
-      "default_icon": {
-        "16": "images/T.png",
-        "32": "images/T.png",
-        "48": "images/T.png",
-        "128": "images/T.png"
-      }
-    },
-    "icons": {
+{
+  "name": "Tinkoff investing percentages table.",
+  "version": "1.0.1",
+  "description": "Add table with percentages per currencies and per equity type to Tinkoff invest site.",
+  "permissions": [
+    "activeTab",
+    "declarativeContent",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.tinkoff.ru/invest/broker_account/*"
+      ],
+      "js": [
+         "load_functions_to_body.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "/compute_and_insert_functions.js"
+  ],
+
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
       "16": "images/T.png",
       "32": "images/T.png",
       "48": "images/T.png",
       "128": "images/T.png"
-    },
-    "manifest_version": 2
-  }
+    }
+  },
+  "icons": {
+    "16": "images/T.png",
+    "32": "images/T.png",
+    "48": "images/T.png",
+    "128": "images/T.png"
+  },
+  "manifest_version": 2
+}
