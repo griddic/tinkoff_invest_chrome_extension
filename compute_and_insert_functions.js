@@ -149,24 +149,38 @@ function create_table_for_document(cost_matrix, aggregated, percentages) {
     <tr>
         <td align="center">currency</td>
         <td align="center"> </td>
-        <td align="center">${aggregated['stock'].toFixed(2)} (${percentages['stock'].toFixed(0)}%) </td>
-        <td align="center">${aggregated['bond'].toFixed(2)} (${percentages['bond'].toFixed(0)}%) </td>
-        <td align="center">${aggregated['cash'].toFixed(2)} (${percentages['cash'].toFixed(0)}%) </td>
-        
+        <td align="center">
+            <div> ${aggregated[stock].toFixed(2)} ₽ </div>
+            <div style="color: blue;font-weight:bold;" > ${percentages[stock].toFixed(0)}% </div>
+        </td>
+        <td align="center">
+            <div> ${aggregated[bond].toFixed(2)} ₽ </div>
+            <div style="color: blue;font-weight:bold;" > ${percentages[bond].toFixed(0)}% </div>
+        </td>
+        <td align="center">
+            <div> ${aggregated[cash].toFixed(2)} ₽ </div>
+            <div style="color: blue;font-weight:bold;" > ${percentages[cash].toFixed(0)}% </div>
+        </td>
     </tr>
     <tr>
         <td align="center">USD</td>
-        <td align="center">${aggregated[usd].toFixed(2)} (${percentages[usd].toFixed(0)}%) </td>
-        <td align="center">${cost_matrix[stock][usd].toFixed(2)}</td>
-        <td align="center">${cost_matrix[bond][usd].toFixed(2)}</td>
-        <td align="center">${cost_matrix[cash][usd].toFixed(2)}</td>
+        <td align="center">
+            <div> ${aggregated[usd].toFixed(2)} ₽ </div>
+            <div style="color: blue;font-weight:bold;" > ${percentages[usd].toFixed(0)}% </div>
+        </td>
+        <td align="center">${cost_matrix[stock][usd].toFixed(2)} ₽ </td>
+        <td align="center">${cost_matrix[bond][usd].toFixed(2)} ₽ </td>
+        <td align="center">${cost_matrix[cash][usd].toFixed(2)} ₽ </td>
     </tr>
     <tr>
         <td align="center">RUR</td>
-        <td align="center">${aggregated[rub].toFixed(2)} (${percentages[rub].toFixed(0)}%) </td>
-        <td align="center">${cost_matrix[stock][rub].toFixed(2)}</td>
-        <td align="center">${cost_matrix[bond][rub].toFixed(2)}</td>
-        <td align="center">${cost_matrix[cash][rub].toFixed(2)}</td>
+        <td align="center">
+            <div> ${aggregated[rub].toFixed(2)} ₽ </div>
+            <div style="color: blue;font-weight:bold;" > ${percentages[rub].toFixed(0)}% </div>
+        </td>
+        <td align="center">${cost_matrix[stock][rub].toFixed(2)} ₽ </td>
+        <td align="center">${cost_matrix[bond][rub].toFixed(2)} ₽ </td>
+        <td align="center">${cost_matrix[cash][rub].toFixed(2)} ₽ </td>
     </tr>
 </table>
 `
