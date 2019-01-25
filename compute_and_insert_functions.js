@@ -184,6 +184,7 @@ function create_table_for_document(cost_matrix, aggregated, percentages) {
     </tr>
 </table>
 `
+    html = html.replace(/(\d)(?=(\d{3})+[. ])/g, '$1  ')
     var table = document.createElement('table')
     table.setAttribute('id', 'percentages_table')
     table.setAttribute('border', '3')
