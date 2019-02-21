@@ -24,11 +24,11 @@ var cash = 'cash'
 
 
 function compute_equty_type(row) {
-    var clicable = row.querySelector('[data-qa-file="Clickable"]')
-    if (clicable == null) {
+    var href = row.querySelector('a')
+    if (href == null) {
         return cash
     }
-    var link = clicable.href
+    var link = href.href
     if (link.includes('bonds')){
         return bond
         }
