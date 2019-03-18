@@ -1,34 +1,34 @@
 function parse_amount(amount_str) {
-    var amount_str = amount_str.replace(',','.')
-    amount_str = amount_str.substring(0, amount_str.length - 1)
-    amount_str = amount_str.replace(' ','')
-    amount_str = amount_str.replace(' ','')
-    return parseFloat(amount_str)
+    let _amount_str = amount_str.replace(',', '.');
+    _amount_str = _amount_str.substring(0, _amount_str.length - 1);
+    _amount_str = _amount_str.replace(' ','');
+    _amount_str = _amount_str.replace(' ','');
+    return parseFloat(_amount_str)
 }
 
 function compute_USDRUB_cource() {
     // var USDRUB_row = $('[href*="/USDRUB/"]').closest('tr')
-    var USDRUB_row = document.querySelector('[href*="/USDRUB/"]').closest('tr')
-    var USDRUB_usd_str = USDRUB_row.querySelector('[data-qa-file="Money"]').textContent
-    var USDRUB_rub_str = USDRUB_row.querySelectorAll('[data-qa-file="Money"]')[3].innerText
-    var USDRUB_usd = parse_amount(USDRUB_usd_str)
-    var USDRUB_rub = parse_amount(USDRUB_rub_str)
+    const USDRUB_row = document.querySelector('[href*="/USDRUB/"]').closest('tr');
+    const USDRUB_usd_str = USDRUB_row.querySelector('[data-qa-file="Money"]').textContent;
+    const USDRUB_rub_str = USDRUB_row.querySelectorAll('[data-qa-file="Money"]')[3].innerText;
+    const USDRUB_usd = parse_amount(USDRUB_usd_str);
+    const USDRUB_rub = parse_amount(USDRUB_rub_str);
     return USDRUB_rub/USDRUB_usd
 }
 
-var rub = 'rub'
-var usd = 'usd'
-var stock = 'stock'
-var bond = 'bond'
-var cash = 'cash'
+const rub = 'rub';
+const usd = 'usd';
+const stock = 'stock';
+const bond = 'bond';
+const cash = 'cash';
 
 
 function compute_equty_type(row) {
-    var href = row.querySelector('a')
+    const href = row.querySelector('a');
     if (href == null) {
         return cash
     }
-    var link = href.href
+    const link = href.href;
     if (link.includes('bonds')){
         return bond
         }
@@ -47,7 +47,7 @@ function extract_currency_symbol(money_str) {
 
 
 function compute_cost_matrix(){
-    var cost_by_type_and_currency = {
+    const cost_by_type_and_currency = {
         stock: {
             rub: 0,
             usd: 0
@@ -60,79 +60,79 @@ function compute_cost_matrix(){
             rub: 0,
             usd: 0
         }
-    }
-    var USDRUB_course = compute_USDRUB_cource()
-    console.log(USDRUB_course)
-    var currencies_curses = {
+    };
+    const USDRUB_course = compute_USDRUB_cource();
+    console.log(USDRUB_course);
+    const currencies_curses = {
         usd: USDRUB_course,
-        rub: 1   
-    }
-    console.log(currencies_curses)
+        rub: 1
+    };
+    console.log(currencies_curses);
 
 
-    var account_table = document.querySelector('[data-qa-file="Table"]')
-    var rows = account_table.getElementsByTagName('tr')
-    for (var i = 0; i < rows.length; i++){
-        var equty_type = compute_equty_type(rows[i])
-        var money_string = rows[i].querySelector('[data-qa-file="Money"]').textContent
-        var symbol = extract_currency_symbol(money_string)
-        var curr;
-        if (symbol == '₽'){
+    const account_table = document.querySelector('[data-qa-file="Table"]');
+    const rows = account_table.getElementsByTagName('tr');
+    for (let i = 0; i < rows.length; i++){
+        const equty_type = compute_equty_type(rows[i]);
+        const money_string = rows[i].querySelector('[data-qa-file="Money"]').textContent;
+        const symbol = extract_currency_symbol(money_string);
+        let curr;
+        if (symbol === '₽'){
             curr = rub
-        } else if (symbol == '$') {
+        } else if (symbol === '$') {
             curr = usd
         } else {
-            console.log(money_string)
+            console.log(money_string);
             console.log("fuck", symbol)
         }
-        var amount = parse_amount(money_string)
-    //     console.log(equty_type, symbol, amount)
+        const amount = parse_amount(money_string);
+        //     console.log(equty_type, symbol, amount)
         cost_by_type_and_currency[equty_type][curr] += amount * currencies_curses[curr]
     }
     return cost_by_type_and_currency    
 }
 function compute_aggregated(cost_matrix) {
-    var in_rubles = cost_matrix['bond'][rub]
-    in_rubles = in_rubles + cost_matrix['stock'][rub]
-    in_rubles = in_rubles + cost_matrix['cash'][rub]
+    let in_rubles = cost_matrix['bond'][rub];
+    in_rubles = in_rubles + cost_matrix['stock'][rub];
+    in_rubles = in_rubles + cost_matrix['cash'][rub];
 
-    var in_usd = cost_matrix['bond'][usd]
-    in_usd = in_usd + cost_matrix['stock'][usd]
-    in_usd = in_usd + cost_matrix['cash'][usd]
+    let in_usd = cost_matrix['bond'][usd];
+    in_usd = in_usd + cost_matrix['stock'][usd];
+    in_usd = in_usd + cost_matrix['cash'][usd];
 
-    var in_cash = cost_matrix['cash'][rub]
-    in_cash = in_cash + cost_matrix['cash'][usd]
+    let in_cash = cost_matrix['cash'][rub];
+    in_cash = in_cash + cost_matrix['cash'][usd];
 
-    var in_stocks = cost_matrix['stock'][rub]
-    in_stocks = in_stocks + cost_matrix['stock'][usd]
+    let in_stocks = cost_matrix['stock'][rub];
+    in_stocks = in_stocks + cost_matrix['stock'][usd];
 
-    var in_bonds = cost_matrix['bond'][rub]
-    in_bonds = in_bonds + cost_matrix['bond'][usd]
+    let in_bonds = cost_matrix['bond'][rub];
+    in_bonds = in_bonds + cost_matrix['bond'][usd];
 
-    var total = in_rubles + in_usd
+    const total = in_rubles + in_usd;
 
-    var aggregated = {}
-    aggregated[rub] = in_rubles
-    aggregated[usd] = in_usd
-    aggregated[bond] = in_bonds
-    aggregated[stock] = in_stocks
-    aggregated[cash] = in_cash
-    aggregated['total'] = total
+    const aggregated = {};
+    aggregated[rub] = in_rubles;
+    aggregated[usd] = in_usd;
+    aggregated[bond] = in_bonds;
+    aggregated[stock] = in_stocks;
+    aggregated[cash] = in_cash;
+    aggregated['total'] = total;
     return aggregated
 }
 function compute_aggregated_percentage(aggregated) {
-    var percentages = {}
-    percentages[rub] = 100 * aggregated[rub] / aggregated['total']
-    percentages[usd] = 100 * aggregated[usd] / aggregated['total']
-    percentages[bond] = 100 * aggregated[bond] / aggregated['total']
-    percentages[stock] = 100 * aggregated[stock] / aggregated['total']
-    percentages[cash] = 100 * aggregated[cash] / aggregated['total']
+    const percentages = {};
+    percentages[rub] = 100 * aggregated[rub] / aggregated['total'];
+    percentages[usd] = 100 * aggregated[usd] / aggregated['total'];
+    percentages[bond] = 100 * aggregated[bond] / aggregated['total'];
+    percentages[stock] = 100 * aggregated[stock] / aggregated['total'];
+    percentages[cash] = 100 * aggregated[cash] / aggregated['total'];
     return percentages
 } 
 
 
 function create_table_for_document(cost_matrix, aggregated, percentages) {
-    var html = `
+    let html = `
     <table>
     <tr>
         <td align="center">
@@ -183,20 +183,20 @@ function create_table_for_document(cost_matrix, aggregated, percentages) {
         <td align="center">${cost_matrix[cash][rub].toFixed(2)} ₽ </td>
     </tr>
 </table>
-`
-    html = html.replace(/(\d)(?=(\d{3})+[. ])/g, '$1  ')
-    var table = document.createElement('table')
-    table.setAttribute('id', 'percentages_table')
-    table.setAttribute('border', '3')
-    table.setAttribute('width', '100%')
-    table.innerHTML = html
+`;
+    html = html.replace(/(\d)(?=(\d{3})+[. ])/g, '$1  ');
+    const table = document.createElement('table');
+    table.setAttribute('id', 'percentages_table');
+    table.setAttribute('border', '3');
+    table.setAttribute('width', '100%');
+    table.innerHTML = html;
     return table
 }
 
 function add_to_header(el){
-    var current_table = document.getElementById('percentages_table')
+    const current_table = document.getElementById('percentages_table');
     if (current_table == null) {
-        var header = document.querySelector('[data-qa-file="BrokerAccountsHeaderPure"]')
+        const header = document.querySelector('[data-qa-file="BrokerAccountsHeaderPure"]');
         header.appendChild(el)
     } else {
         current_table.innerHTML = el.innerHTML
@@ -204,32 +204,32 @@ function add_to_header(el){
 }
 
 function compute_and_insert_percentages_table(){
-    var cost_by_type_and_currency = compute_cost_matrix()
-    var aggregated = compute_aggregated(cost_by_type_and_currency)
-    var percentages = compute_aggregated_percentage(aggregated)
+    const cost_by_type_and_currency = compute_cost_matrix();
+    const aggregated = compute_aggregated(cost_by_type_and_currency);
+    const percentages = compute_aggregated_percentage(aggregated);
 
-    var table = create_table_for_document(cost_by_type_and_currency, aggregated, percentages)
+    const table = create_table_for_document(cost_by_type_and_currency, aggregated, percentages);
     add_to_header(table)
 }
 
 function proceed_after_header_appear(){
-    header = document.querySelector('[data-qa-file="BrokerAccountsHeaderPure"]')
+    let header = document.querySelector('[data-qa-file="BrokerAccountsHeaderPure"]');
     if (header == null){
-        console.log("waiting for a header.")
+        console.log("waiting for a header.");
         setTimeout(proceed_after_header_appear, 1000)
     } else {
-        console.log("Header is heare!!!")
+        console.log("Header is heare!!!");
         compute_and_insert_percentages_table()
     }
 }
 
 function create_empty_table(){
-    var html = '<table><tr><td>refresh</td><td></td></tr></table>'
-    var table = document.createElement('table')
-    table.setAttribute('id', 'percentages_table')
-    table.setAttribute('border', '3')
-    table.setAttribute('width', '100%')
-    table.innerHTML = html
+    const html = '<table><tr><td>refresh</td><td></td></tr></table>';
+    const table = document.createElement('table');
+    table.setAttribute('id', 'percentages_table');
+    table.setAttribute('border', '3');
+    table.setAttribute('width', '100%');
+    table.innerHTML = html;
     add_to_header(table)
 }
 
