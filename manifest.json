@@ -19,7 +19,7 @@
     }
   ],
   "web_accessible_resources": [
-    "/compute_and_insert_functions.js"
+    "/compute_and_insert.js"
   ],
 
   "page_action": {
