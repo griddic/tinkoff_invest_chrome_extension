@@ -169,22 +169,24 @@ function create_table_for_document(cost_matrix, aggregated, percentages) {
     let headerRow = body.insertRow()
     let refreshCell = headerRow.insertCell()
 
-    let refreshButton = document.createElement('button')
-    refreshButton.innerText = 'Refresh'
-    refreshButton.onclick = function (ev) {
-        ev.preventDefault()
-        compute_and_insert_percentages_table()
-    }
-    refreshCell.appendChild(refreshButton)
+    // let refreshButton = document.createElement('button')
+    // refreshButton.innerText = 'Обновить'
+    // refreshButton.onclick = function (ev) {
+    //     ev.preventDefault()
+    //     compute_and_insert_percentages_table()
+    // }
+    refreshCell.setAttribute('colspan', 2)
+    refreshCell.setAttribute('rowspan', 2)
+    // refreshCell.appendChild(refreshButton)
 
-    headerRow.insertCell().appendChild(createCentredTextCell('equity type'))
-    headerRow.insertCell().appendChild(createCentredTextCell('stocks'))
-    headerRow.insertCell().appendChild(createCentredTextCell('bonds'))
-    headerRow.insertCell().appendChild(createCentredTextCell('cash'))
+    // headerRow.insertCell().appendChild(createCentredTextCell(''))
+    headerRow.insertCell().appendChild(createCentredTextCell('Акции'))
+    headerRow.insertCell().appendChild(createCentredTextCell('Облигации'))
+    headerRow.insertCell().appendChild(createCentredTextCell('Деньги'))
 
     let subHeaderRow = table.insertRow()
-    subHeaderRow.insertCell().appendChild(createCentredTextCell('currency'))
-    subHeaderRow.insertCell().appendChild(createCentredTextCell(''))
+    // subHeaderRow.insertCell().appendChild(createCentredTextCell('Валюта'))
+    // subHeaderRow.insertCell().appendChild(createCentredTextCell(''))
     subHeaderRow.insertCell().appendChild(createRubValueWithPercentages(aggregated[stock], percentages[stock]))
     subHeaderRow.insertCell().appendChild(createRubValueWithPercentages(aggregated[bond], percentages[bond]))
     subHeaderRow.insertCell().appendChild(createRubValueWithPercentages(aggregated[cash], percentages[cash]))
